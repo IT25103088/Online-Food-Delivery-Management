@@ -14,7 +14,7 @@ public class CartItem implements Serializable {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
-        this.imageUrl = imageUrl == null ? "" : imageUrl;
+
     }
 
     public String getRestaurantName() { return restaurantName; }
