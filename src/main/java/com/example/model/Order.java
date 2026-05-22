@@ -32,6 +32,7 @@ public class Order {
         this.totalPrice = totalPrice;
         this.deliveryAddress = deliveryAddress;
         this.status = status;
+        this.createdAt = createdAt;
 
     }
 
