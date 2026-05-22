@@ -13,7 +13,7 @@ public class Order {
 
     private String orderId;
     private String username;
-
+    private String restaurantName;
     private String itemName;
     private int quantity;
     private double totalPrice;
