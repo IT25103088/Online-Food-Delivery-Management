@@ -16,7 +16,9 @@ public class MenuItem {
         this.imageUrl = imageUrl;
     }
 
-    public String getRestaurantName() { return restaurantName; }
+    public String getRestaurantName() {
+        return restaurantName;
+    }
     public String getItemName()       { return itemName; }
     public double getPrice()          { return price; }
     public String getDescription()    { return description; }
