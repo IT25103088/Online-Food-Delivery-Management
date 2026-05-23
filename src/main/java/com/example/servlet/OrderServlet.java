@@ -109,7 +109,7 @@ public class OrderServlet extends HttpServlet {
             res.sendRedirect("component4.html");
             return;
         }
-        String action = req.getParameter("action");
+
         String orderId = req.getParameter("orderId");
         boolean admin = SessionUtil.isAdmin(req);
         boolean worker = SessionUtil.isWorker(req);
