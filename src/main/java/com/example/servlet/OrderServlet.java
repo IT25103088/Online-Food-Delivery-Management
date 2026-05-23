@@ -111,7 +111,7 @@ public class OrderServlet extends HttpServlet {
         }
         String action = req.getParameter("action");
         String orderId = req.getParameter("orderId");
-        String action = req.getParameter("action");
+
         boolean admin = SessionUtil.isAdmin(req);
         boolean worker = SessionUtil.isWorker(req);
         String user = SessionUtil.getLoggedUser(req);
