@@ -5,27 +5,23 @@ import jakarta.servlet.http.HttpSession;
 
 public class SessionUtil {
     public static boolean isLoggedIn(HttpServletRequest req) {
-        HttpSession session = req.getSession(false);
-        return session != null && session.getAttribute("loggedUser") != null;
+        HttpSession s = req.getSession(false);
+        return s != null && s.getAttribute("loggedUser") != null;
     }
-
-    public static String getLoggedUser(HttpServletRequest req) {
-        HttpSession session = req.getSession(false);
-        Object value = session == null ? null : session.getAttribute("loggedUser");
-        return value == null ? null : value.toString();
-    }
-
-    public static String getRole(HttpServletRequest req) {
-        HttpSession session = req.getSession(false);
-        Object value = session == null ? null : session.getAttribute("userRole");
-        return value == null ? "customer" : value.toString();
-    }
-
     public static boolean isAdmin(HttpServletRequest req) {
-        return "admin".equalsIgnoreCase(getRole(req));
+        HttpSession s = req.getSession(false);
+        return s != null && "admin".equalsIgnoreCase((String)s.getAttribute("userRole"));
     }
-
     public static boolean isWorker(HttpServletRequest req) {
-        return "worker".equalsIgnoreCase(getRole(req));
+        HttpSession s = req.getSession(false);
+        return s != null && "worker".equalsIgnoreCase((String)s.getAttribute("userRole"));
+    }
+    public static String getLoggedUser(HttpServletRequest req) {
+        HttpSession s = req.getSession(false);
+        return s == null ? null : (String)s.getAttribute("loggedUser");
+    }
+    public static String getRole(HttpServletRequest req) {
+        HttpSession s = req.getSession(false);
+        return s == null ? null : (String)s.getAttribute("userRole");
     }
 }

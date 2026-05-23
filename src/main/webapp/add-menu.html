@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Add Menu Item – Zeatly</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    window.onload=function(){
+      const p=new URLSearchParams(window.location.search),m=document.getElementById('msg');
+      if(p.get('error')==='invalid'&&m){m.className='alert alert-error';m.textContent='❌ Please check all fields.';}
+    };
+    function previewImg(){
+      const url=document.getElementById('imgUrl').value;
+      const img=document.getElementById('prevImg');
+      const box=document.getElementById('prevBox');
+      if(url){
+        img.src=url;img.style.display='block';
+        box.style.fontSize='0';
+        img.onerror=()=>{img.style.display='none';box.style.fontSize='44px';box.textContent='🍽️';};
+      } else {img.style.display='none';box.style.fontSize='44px';}
+    }
+  </script>
+</head>
+<body>
+<div class="app-layout">
+<aside class="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-brand">🔥 <span>Zeatly</span></div>
+  </div>
+  <div class="sidebar-section">MAIN MODULES</div>
+  <a href="admin" class="sidebar-link"><span class="sl-icon">📊</span>Dashboard</a>
+  <a href="restaurant" class="sidebar-link"><span class="sl-icon">🏪</span>Restaurants</a>
+  <a href="menu" class="sidebar-link active"><span class="sl-icon">🍔</span>Menu Items</a>
+  <a href="order" class="sidebar-link"><span class="sl-icon">📦</span>Orders</a>
+  <a href="users" class="sidebar-link"><span class="sl-icon">👥</span>Users</a>
+  <a href="feedback" class="sidebar-link"><span class="sl-icon">⭐</span>Reviews</a>
+  <div class="sidebar-section">ACCOUNT</div>
+  <a href="logout" class="sidebar-link"><span class="sl-icon">🚪</span>Sign Out</a>
+</aside>
+<div class="main-content">
+  <div class="topbar">
+    <div><h1 class="page-title">Add Menu Item</h1><p class="page-sub">Add a new dish to a restaurant</p></div>
+  </div>
+  <div class="form-page"><div class="form-container">
+    <div id="msg"></div>
+    <div class="form-card animate-up">
+      <form action="menu" method="post">
+        <div class="form-group">
+          <label>Restaurant Name</label>
+          <input type="text" name="restaurantName" placeholder="Must match existing restaurant exactly" required>
+          <div class="form-hint">Must match an existing restaurant name exactly</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Item Name</label><input type="text" name="itemName" placeholder="e.g. Margherita Pizza" required></div>
+          <div class="form-group"><label>Price (LKR)</label><input type="number" name="price" placeholder="850" step="0.01" min="0" required></div>
+        </div>
+        <div class="form-group"><label>Category</label>
+          <select name="category">
+            <option value="Main Course">🍽️ Main Course</option>
+            <option value="Starters">🥗 Starters</option>
+            <option value="Desserts">🍰 Desserts</option>
+            <option value="Drinks">🥤 Drinks</option>
+            <option value="Pizza">🍕 Pizza</option>
+            <option value="Burgers">🍔 Burgers</option>
+            <option value="Rice & Noodles">🍜 Rice &amp; Noodles</option>
+            <option value="Seafood">🦐 Seafood</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Description</label><textarea name="description" placeholder="Describe the dish…"></textarea></div>
+        <div class="form-group">
+          <label>Image URL (optional)</label>
+          <input type="text" id="imgUrl" name="imageUrl" placeholder="Paste an image URL…" oninput="previewImg()">
+          <div class="form-hint">Right-click any food image on Google → "Copy image address" → paste here</div>
+        </div>
+        <div class="img-preview" id="prevBox">🍽️<img id="prevImg" src="" style="display:none;width:100%;height:100%;object-fit:cover"></div>
+        <div style="display:flex;gap:10px">
+          <button type="submit" class="btn btn-primary">Add Item</button>
+          <a href="menu" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div></div>
+</div>
+</div>
+</body>
+</html>
