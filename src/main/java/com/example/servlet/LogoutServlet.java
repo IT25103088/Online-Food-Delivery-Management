@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        HttpSession session = req.getSession(false);
+        HttpSession session = req.getSession(false)
         if (session != null) session.invalidate();
         res.sendRedirect("component4.html");
     }
