@@ -9,8 +9,5 @@
         <module name="component4-order-management" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="FoodDelivery" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
