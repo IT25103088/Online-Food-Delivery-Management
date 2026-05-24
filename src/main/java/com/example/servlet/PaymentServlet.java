@@ -180,8 +180,7 @@ public class PaymentServlet extends HttpServlet {
 
         for (String line : lines) {
             String[] parts = line.split("\\|");
-            if (parts.length == 8 && parts[0].equals(orderId)) {
-                parts[7] = result;
+            
                 updated.add(String.join("|", parts));
             } else {
                 updated.add(line);
