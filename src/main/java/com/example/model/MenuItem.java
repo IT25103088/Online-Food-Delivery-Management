@@ -2,8 +2,7 @@ package com.example.model;
 
 public class MenuItem {
 
-    private String restaurantName;
-    private String itemName;
+    
     private double price;
     private String description;
     private String imageUrl;
