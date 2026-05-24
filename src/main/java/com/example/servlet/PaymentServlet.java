@@ -25,7 +25,8 @@ public class PaymentServlet extends HttpServlet {
         String orderId = req.getParameter("orderId");
 
         // Find order total from file
-        
+        double total = 0;
+        String itemName = "", restaurantName = "";
         for (String line : FileHandler.readFromFile("orders.txt")) {
             String[] p = line.split("\\|");
             if (p.length >= 8 && p[0].equals(orderId)) {
