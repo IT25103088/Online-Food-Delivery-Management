@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sign In – Zeatly</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    window.onload = function() {
+      const p = new URLSearchParams(window.location.search);
+      const m = document.getElementById('msg');
+      if (!m) return;
+      if (p.get('error')==='invalid')     { m.className='alert alert-error';   m.textContent='❌ Invalid username or password.'; }
+      if (p.get('error')==='notloggedin') { m.className='alert alert-error';   m.textContent='❌ Please log in first.'; }
+      if (p.get('success')==='registered'){ m.className='alert alert-success'; m.textContent='✓ Account created! Please log in.'; }
+      if (p.get('msg')==='loggedout')     { m.className='alert alert-success'; m.textContent='✓ You have been logged out.'; }
+    };
+  </script>
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-left">
+    <div class="auth-left-content animate-up">
+      <div class="auth-brand">🔥 Zeatly</div>
+      <div class="auth-brand-sub">Food. Fast. Fresh.</div>
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon">🏪</div>
+          <span>Hundreds of top restaurants</span>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">⚡</div>
+          <span>Lightning-fast delivery</span>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">📍</div>
+          <span>Real-time order tracking</span>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">💳</div>
+          <span>Secure card &amp; cash payments</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="auth-right">
+    <div class="auth-form">
+      <h2>Welcome back 👋</h2>
+      <p class="auth-sub">Sign in to your Zeatly account</p>
+      <div id="msg"></div>
+      <form action="login" method="post">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="Enter your username" required autofocus>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:15px">Sign In →</button>
+      </form>
+      <div class="auth-footer">Don't have an account? <a href="register.html">Create one free</a></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

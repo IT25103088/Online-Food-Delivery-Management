@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Home – Zeatly</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    window.onload = function() {
+      // cart badge
+      fetch('cart').then(r=>r.text()).then(html=>{
+        const m = html.match(/id="cartCount">(\d+)</);
+        if(m) document.getElementById('cartBadge').textContent = m[1];
+      }).catch(()=>{});
+    };
+  </script>
+</head>
+<body>
+<nav class="customer-nav">
+  <a href="dashboard.html" class="brand">🔥 Zeatly</a>
+  <div class="nav-links">
+    <a href="restaurant">🏪 Restaurants</a>
+    <a href="menu">🍔 Menu</a>
+    <a href="cart">🛒 Cart <span class="nav-badge" id="cartBadge">0</span></a>
+    <a href="order">📦 My Orders</a>
+    <a href="feedback">⭐ Reviews</a>
+    <a href="logout" class="nav-logout">Sign Out</a>
+  </div>
+</nav>
+
+<div class="customer-page">
+  <!-- HERO -->
+  <div class="hero animate-up">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        Live now · Delivering across your city
+      </div>
+      <h1>Hungry? <br><span class="hero-accent">We deliver</span> fast 🔥</h1>
+      <p>Order from the best restaurants in your area. Fresh food at your door in minutes.</p>
+      <div class="hero-btns">
+        <a href="restaurant" class="btn btn-white btn-lg">Browse Restaurants</a>
+        <a href="menu" class="btn btn-ghost btn-lg">View Full Menu</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">50+</div><div class="hero-stat-label">Restaurants</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">30m</div><div class="hero-stat-label">Avg Delivery</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">4.8★</div><div class="hero-stat-label">Rating</div></div>
+    </div>
+  </div>
+
+  <!-- QUICK ACCESS -->
+  <div class="section-header">
+    <div class="section-title">Quick Access</div>
+  </div>
+  <div class="dash-grid">
+    <a href="restaurant" class="dash-card delay-1">
+      <div class="dash-card-icon">🏪</div>
+      <div class="dash-card-text"><h3>Restaurants</h3><p>Browse all restaurants near you</p></div>
+    </a>
+    <a href="menu" class="dash-card delay-2">
+      <div class="dash-card-icon">🍔</div>
+      <div class="dash-card-text"><h3>Full Menu</h3><p>All dishes in one place</p></div>
+    </a>
+    <a href="cart" class="dash-card delay-3">
+      <div class="dash-card-icon">🛒</div>
+      <div class="dash-card-text"><h3>My Cart</h3><p>Review &amp; checkout your items</p></div>
+    </a>
+    <a href="order" class="dash-card delay-4">
+      <div class="dash-card-icon">📦</div>
+      <div class="dash-card-text"><h3>My Orders</h3><p>Track all your orders</p></div>
+    </a>
+    <a href="add-feedback.html" class="dash-card delay-5">
+      <div class="dash-card-icon">⭐</div>
+      <div class="dash-card-text"><h3>Write a Review</h3><p>Share your experience</p></div>
+    </a>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<script>
+function showToast(msg, type='') {
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  document.getElementById('toastContainer').appendChild(t);
+  setTimeout(()=>t.remove(), 3500);
+}
+const p = new URLSearchParams(window.location.search);
+if(p.get('success')==='ordered') showToast('✅ Order placed successfully!','success');
+if(p.get('success')==='carted')  showToast('🛒 Item added to cart!','success');
+</script>
+</body>
+</html>
