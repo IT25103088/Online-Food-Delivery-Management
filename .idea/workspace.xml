@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e9658f1-df6f-47cc-bea7-e7a21fcc6a54" name="Changes" comment="" />
+    <list default="true" id="0e9658f1-df6f-47cc-bea7-e7a21fcc6a54" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/servlet/MenuServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/servlet/MenuServlet.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,18 +15,42 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/IT25103088/Online-Food-Delivery-Management.git",
-    "accountId": "28052af0-0235-47ff-8fc0-b1acf9102ff9"
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "IT25103088"
   }
 }]]></component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/IT25103088/Online-Food-Delivery-Management.git&quot;,
+    &quot;accountId&quot;: &quot;28052af0-0235-47ff-8fc0-b1acf9102ff9&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="3E9w8WvaJZNY7vYdEBGwCS2pOVU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "main"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "menu-food-item-management",
+    "kotlin-language-version-configured": "true"
   }
 }]]></component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0e9658f1-df6f-47cc-bea7-e7a21fcc6a54" name="Changes" comment="" />
+      <created>1779603934714</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779603934714</updated>
+    </task>
     <servers />
   </component>
 </project>
