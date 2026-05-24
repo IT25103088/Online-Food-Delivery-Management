@@ -27,6 +27,13 @@
   }
 }</component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0e9658f1-df6f-47cc-bea7-e7a21fcc6a54" name="Changes" comment="" />
+      <created>1779603934714</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779603934714</updated>
+    </task>
     <servers />
   </component>
 </project>
