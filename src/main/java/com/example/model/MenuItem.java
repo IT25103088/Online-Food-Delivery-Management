@@ -9,7 +9,8 @@ public class MenuItem {
     private String imageUrl;
 
     public MenuItem(String restaurantName, String itemName, double price, String description, String imageUrl) {
-        
+        this.restaurantName = restaurantName;
+        this.itemName = itemName;
         this.price = price;
         this.description = description;
         this.imageUrl = imageUrl;
