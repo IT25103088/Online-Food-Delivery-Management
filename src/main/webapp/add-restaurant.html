@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Add Restaurant – Zeatly</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    window.onload=function(){
+      const p=new URLSearchParams(window.location.search),m=document.getElementById('msg');
+      if(p.get('error')==='empty'&&m){m.className='alert alert-error';m.textContent='❌ All fields are required.';}
+    };
+    let map, marker, selLat, selLng;
+    function openMap(){
+      document.getElementById('mapModal').classList.add('open');
+      setTimeout(()=>{
+        if(!map){
+          map=L.map('rmap').setView([7.8731,80.7718],8);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
+          map.on('click',function(e){
+            selLat=e.latlng.lat;selLng=e.latlng.lng;
+            if(marker)marker.remove();
+            marker=L.marker([selLat,selLng]).addTo(map);
+            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${selLat}&lon=${selLng}&format=json`)
+              .then(r=>r.json()).then(d=>{
+                document.getElementById('rAddrPreview').textContent=d.display_name||`${selLat.toFixed(4)},${selLng.toFixed(4)}`;
+              }).catch(()=>{ document.getElementById('rAddrPreview').textContent=`${selLat.toFixed(4)},${selLng.toFixed(4)}`; });
+          });
+        } else { map.invalidateSize(); }
+      },100);
+    }
+    function closeMap(){document.getElementById('mapModal').classList.remove('open');}
+    function confirmRLocation(){
+      if(!selLat){alert('Click on the map first.');return;}
+      const addr=document.getElementById('rAddrPreview').textContent;
+      document.getElementById('locationInput').value=addr;
+      closeMap();
+    }
+  </script>
+</head>
+<body>
+<div class="app-layout">
+<aside class="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-brand">🔥 <span>Zeatly</span></div>
+  </div>
+  <div class="sidebar-section">MAIN MODULES</div>
+  <a href="admin" class="sidebar-link"><span class="sl-icon">📊</span>Dashboard</a>
+  <a href="restaurant" class="sidebar-link active"><span class="sl-icon">🏪</span>Restaurants</a>
+  <a href="menu" class="sidebar-link"><span class="sl-icon">🍔</span>Menu Items</a>
+  <a href="order" class="sidebar-link"><span class="sl-icon">📦</span>Orders</a>
+  <a href="users" class="sidebar-link"><span class="sl-icon">👥</span>Users</a>
+  <a href="feedback" class="sidebar-link"><span class="sl-icon">⭐</span>Reviews</a>
+  <div class="sidebar-section">ACCOUNT</div>
+  <a href="logout" class="sidebar-link"><span class="sl-icon">🚪</span>Sign Out</a>
+</aside>
+<div class="main-content">
+  <div class="topbar">
+    <div><h1 class="page-title">Add Restaurant</h1><p class="page-sub">Register a new restaurant on Zeatly</p></div>
+  </div>
+  <div class="form-page"><div class="form-container">
+    <div id="msg"></div>
+    <div class="form-card animate-up">
+      <form action="restaurant" method="post">
+        <div class="form-group"><label>Restaurant Name</label><input type="text" name="name" placeholder="e.g. Pizza Palace" required></div>
+        <div class="form-group">
+          <label>Location / Address</label>
+          <div class="location-row">
+            <div class="location-input-wrap">
+              <span class="location-pin">📍</span>
+              <input type="text" id="locationInput" name="location" placeholder="e.g. Colombo 03" required>
+            </div>
+            <button type="button" class="btn btn-secondary location-map-btn" onclick="openMap()">🗺️ Pick on Map</button>
+          </div>
+        </div>
+        <div class="form-group"><label>Cuisine Type</label><input type="text" name="cuisine" placeholder="e.g. Italian, Sri Lankan" required></div>
+        <div style="display:flex;gap:10px">
+          <button type="submit" class="btn btn-primary">Add Restaurant</button>
+          <a href="restaurant" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div></div>
+</div>
+</div>
+
+<!-- MAP MODAL -->
+<div class="map-modal" id="mapModal">
+  <div class="map-modal-box">
+    <div class="map-modal-head">
+      <h3>📍 Pick Restaurant Location</h3>
+      <button class="map-modal-close" onclick="closeMap()">✕</button>
+    </div>
+    <div id="rmap" style="height:360px"></div>
+    <div class="map-modal-foot">
+      <div class="selected-address-preview" id="rAddrPreview">Click on the map…</div>
+      <button class="btn btn-primary" onclick="confirmRLocation()">Use This Location</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
