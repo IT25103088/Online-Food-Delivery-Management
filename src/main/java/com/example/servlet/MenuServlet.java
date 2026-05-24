@@ -59,7 +59,7 @@ public class MenuServlet extends HttpServlet {
         out.println("<nav class='customer-nav'><a class='brand' href='" + (isAdmin ? "admin-dashboard.html" : "dashboard.html") + "'>🔥 Zeatly</a>");
         out.println("<div class='nav-links'>");
         out.println(isAdmin ? "<a href='admin-dashboard.html'>Dashboard</a>" : "<a href='dashboard.html'>Dashboard</a>");
-        if (!isAdmin) {
+        if (!isNotAdmin) {
             out.println("<a href='cart'>🛒 Cart <span class='nav-badge'>" + cartCount + "</span></a>");
             out.println("<a href='order'>My Orders</a>");
         }
@@ -70,7 +70,7 @@ public class MenuServlet extends HttpServlet {
 
         String success = req.getParameter("success");
         if (success != null) out.println("<div class='alert alert-success'>✓ Operation successful!</div>");
-        if (isAdmin) out.println("<a href='add-menu.html' class='btn' style='margin-bottom:20px'>+ Add Item</a>");
+        if (isNotAdmin) out.println("<a href='add-menu.html' class='btn' style='margin-bottom:20px'>+ Add Item</a>");
 
         // --- Search & Filter Bar ---
         out.println("<div class='filter-bar'>");
