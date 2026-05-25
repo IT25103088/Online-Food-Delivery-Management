@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Write Review – Zeatly</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .star-rating { display:flex; gap:6px; margin-bottom:6px; }
+    .star-btn { font-size:32px; cursor:pointer; transition:transform 0.15s; background:none; border:none; padding:0; line-height:1; }
+    .star-btn:hover, .star-btn.active { transform:scale(1.2); }
+    .star-btn.active { filter:drop-shadow(0 0 4px rgba(255,152,0,0.7)); }
+  </style>
+  <script>
+    window.onload = function() {
+      const p = new URLSearchParams(window.location.search);
+      const m = document.getElementById('msg');
+      if (p.get('error') && m) { m.className='alert alert-error'; m.textContent='❌ Please fill all fields correctly.'; }
+      // star rating
+      const stars = document.querySelectorAll('.star-btn');
+      const ratingInput = document.getElementById('ratingInput');
+      stars.forEach((s,i) => {
+        s.addEventListener('click', () => {
+          ratingInput.value = i+1;
+          stars.forEach((x,j) => x.classList.toggle('active', j<=i));
+        });
+      });
+    };
+  </script>
+</head>
+<body>
+<nav class="customer-nav">
+  <a href="dashboard.html" class="brand">🔥 Zeatly</a>
+  <div class="nav-links">
+    <a href="restaurant">🏪 Restaurants</a>
+    <a href="menu">🍔 Menu</a>
+    <a href="cart">🛒 Cart</a>
+    <a href="order">📦 My Orders</a>
+    <a href="feedback" class="active">⭐ Reviews</a>
+    <a href="logout" class="nav-logout">Sign Out</a>
+  </div>
+</nav>
+<div class="customer-page">
+  <div style="max-width:560px;margin:0 auto">
+    <div class="page-header animate-up">
+      <h1>⭐ Write a Review</h1>
+      <p>Share your experience with the community</p>
+    </div>
+    <div id="msg"></div>
+    <div class="form-card animate-up delay-1">
+      <form action="feedback" method="post">
+        <div class="form-group">
+          <label>Restaurant Name</label>
+          <input type="text" name="restaurantName" placeholder="e.g. Pizza Palace" required>
+        </div>
+        <div class="form-group">
+          <label>Food Item Name</label>
+          <input type="text" name="itemName" placeholder="e.g. Margherita Pizza" required>
+        </div>
+        <div class="form-group">
+          <label>Your Rating</label>
+          <div class="star-rating">
+            <button type="button" class="star-btn" title="1">⭐</button>
+            <button type="button" class="star-btn" title="2">⭐</button>
+            <button type="button" class="star-btn" title="3">⭐</button>
+            <button type="button" class="star-btn" title="4">⭐</button>
+            <button type="button" class="star-btn" title="5">⭐</button>
+          </div>
+          <input type="hidden" id="ratingInput" name="rating" required>
+          <div class="form-hint">Click a star to rate</div>
+        </div>
+        <div class="form-group">
+          <label>Your Review</label>
+          <textarea name="review" placeholder="Tell us about your experience..." required></textarea>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button type="submit" class="btn btn-primary" style="flex:1">Submit Review</button>
+          <a href="feedback" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
