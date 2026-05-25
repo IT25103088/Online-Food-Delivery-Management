@@ -35,6 +35,9 @@ public class FileHandler {
             }
         }
         return lines;
+
+
+        
     }
 
     public static synchronized void writeLines(String filename, List<String> lines) throws IOException {
