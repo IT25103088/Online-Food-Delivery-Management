@@ -175,9 +175,7 @@ public class PaymentServlet extends HttpServlet {
         String result  = req.getParameter("result").trim();
         String method  = req.getParameter("method") != null ? req.getParameter("method").trim() : "card";
 
-        List<String> lines   = FileHandler.readFromFile("orders.txt");
-        List<String> updated = new ArrayList<>();
-
+       
         for (String line : lines) {
             String[] parts = line.split("\\|");
             if (parts.length == 8 && parts[0].equals(orderId)) {
