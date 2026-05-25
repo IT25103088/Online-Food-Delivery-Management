@@ -15,7 +15,8 @@ public class FileHandler {
 
     static {
         File dir = new File(BASE_DIR);
-        if (!dir.exists()) dir.mkdirs();
+
+        
     }
 
     public static synchronized void appendLine(String filename, String data) throws IOException {
