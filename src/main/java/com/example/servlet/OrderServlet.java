@@ -127,6 +127,8 @@ public class OrderServlet extends HttpServlet {
                 res.sendRedirect("orders?error=notallowed");
             }
             return;
+
+            
         }
 
         if ("deleteOrder".equals(action)) {
