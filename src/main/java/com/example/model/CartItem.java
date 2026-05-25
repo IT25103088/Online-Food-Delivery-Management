@@ -25,5 +25,6 @@ public class CartItem implements Serializable {
     public String getImageUrl() { return imageUrl; }
 
     public void setQuantity(int quantity) { this.quantity = quantity; }
+    public double getSubtotal() { return price * quantity; }
 
 }
