@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Register – Zeatly</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    window.onload = function() {
+      const p = new URLSearchParams(window.location.search);
+      const m = document.getElementById('msg');
+      if (!m) return;
+      const msgs = {
+        empty:'❌ All fields are required.',
+        exists:'❌ Username already taken.',
+        usernamelong:'❌ Username must be 20 characters or less.',
+        invalidchars:'❌ Username/password cannot contain the | character.',
+        invalidemail:'❌ Please enter a valid email address.',
+        shortpassword:'❌ Password must be at least 6 characters.'
+      };
+      const e = p.get('error');
+      if (msgs[e]) { m.className='alert alert-error'; m.textContent=msgs[e]; }
+    };
+  </script>
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-left">
+    <div class="auth-left-content animate-up">
+      <div class="auth-brand">🔥 Zeatly</div>
+      <div class="auth-brand-sub">Join millions of food lovers</div>
+      <div class="auth-features">
+        <div class="auth-feature"><div class="auth-feature-icon">🎁</div><span>Free to join – no hidden fees</span></div>
+        <div class="auth-feature"><div class="auth-feature-icon">🍕</div><span>Exclusive deals &amp; offers</span></div>
+        <div class="auth-feature"><div class="auth-feature-icon">⭐</div><span>Rate &amp; review your orders</span></div>
+        <div class="auth-feature"><div class="auth-feature-icon">🔒</div><span>Your data is always secure</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="auth-right">
+    <div class="auth-form">
+      <h2>Create Account</h2>
+      <p class="auth-sub">Fill in your details to get started</p>
+      <div id="msg"></div>
+      <form action="register" method="post">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="Choose a username" maxlength="20" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Min 6 characters" minlength="6" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:15px">Create Account →</button>
+      </form>
+      <div class="auth-footer">Already have an account? <a href="login.html">Sign in</a></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

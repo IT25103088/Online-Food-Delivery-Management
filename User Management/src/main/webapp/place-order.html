@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Place Order – Zeatly</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    .order-summary{background:linear-gradient(135deg,var(--brand),var(--accent));border-radius:var(--radius-lg);padding:22px;color:#fff;margin-bottom:22px}
+    .order-summary-label{font-size:12px;opacity:0.8;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em}
+    .order-summary-value{font-family:'Syne',sans-serif;font-size:32px;font-weight:800}
+  </style>
+</head>
+<body>
+<nav class="customer-nav">
+  <a href="dashboard.html" class="brand">🔥 Zeatly</a>
+  <div class="nav-links">
+    <a href="menu">🍔 Menu</a>
+    <a href="cart">🛒 Cart</a>
+    <a href="order">📦 My Orders</a>
+    <a href="logout" class="nav-logout">Sign Out</a>
+  </div>
+</nav>
+
+<div class="customer-page">
+  <div style="max-width:520px;margin:0 auto">
+    <div class="page-header animate-up">
+      <h1>🛒 Place Order</h1>
+      <p>Review and confirm your order</p>
+    </div>
+
+    <div class="form-card animate-up delay-1">
+      <form action="order" method="post" id="orderForm">
+        <div class="form-group">
+          <label>Restaurant</label>
+          <input type="text" id="restaurantName" name="restaurantName" readonly style="background:var(--surface3);color:var(--text2)">
+        </div>
+        <div class="form-group">
+          <label>Item</label>
+          <input type="text" id="itemName" name="itemName" readonly style="background:var(--surface3);color:var(--text2)">
+        </div>
+        <input type="hidden" id="price" name="price">
+
+        <div class="form-group">
+          <label>Quantity</label>
+          <input type="number" id="qty" name="quantity" value="1" min="1" max="20" required oninput="updateTotal()">
+        </div>
+
+        <!-- DELIVERY LOCATION -->
+        <div class="form-group">
+          <label>Delivery Address</label>
+          <div class="location-row">
+            <div class="location-input-wrap">
+              <span class="location-pin">📍</span>
+              <input type="text" id="deliveryAddress" name="deliveryAddress" placeholder="Enter your address" required>
+            </div>
+            <button type="button" class="btn btn-secondary location-map-btn" onclick="openMap()">🗺️ Pick on Map</button>
+          </div>
+          <input type="hidden" id="deliveryLat" name="deliveryLat">
+          <input type="hidden" id="deliveryLng" name="deliveryLng">
+        </div>
+
+        <div class="order-summary">
+          <div class="order-summary-label">Order Total</div>
+          <div class="order-summary-value" id="total">LKR 0.00</div>
+        </div>
+
+        <div style="display:flex;gap:10px">
+          <button type="submit" class="btn btn-primary btn-lg" style="flex:1">Confirm Order →</button>
+          <a href="menu" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="alert alert-info animate-up delay-2" style="margin-top:14px">💡 Use the Cart to order multiple items at once!</div>
+  </div>
+</div>
+
+<!-- MAP MODAL -->
+<div class="map-modal" id="mapModal">
+  <div class="map-modal-box">
+    <div class="map-modal-head">
+      <h3>📍 Pick Delivery Location</h3>
+      <button class="map-modal-close" onclick="closeMap()">✕</button>
+    </div>
+    <div id="map"></div>
+    <div class="map-modal-foot">
+      <div class="selected-address-preview" id="addressPreview">Click on the map to select your location…</div>
+      <button class="btn btn-primary" onclick="confirmLocation()">Confirm Location</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload = function() {
+    const p = new URLSearchParams(window.location.search);
+    if(p.get('item'))       document.getElementById('itemName').value = p.get('item');
+    if(p.get('restaurant')) document.getElementById('restaurantName').value = p.get('restaurant');
+    if(p.get('price')) {    document.getElementById('price').value = p.get('price'); updateTotal(); }
+  };
+  function updateTotal() {
+    const qty   = parseFloat(document.getElementById('qty').value)   || 0;
+    const price = parseFloat(document.getElementById('price').value) || 0;
+    document.getElementById('total').textContent = 'LKR ' + (qty * price).toFixed(2);
+  }
+
+  let map, marker, selectedLat, selectedLng;
+  function openMap() {
+    document.getElementById('mapModal').classList.add('open');
+    setTimeout(() => {
+      if (!map) {
+        map = L.map('map').setView([7.8731, 80.7718], 8); // Sri Lanka center
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        map.on('click', function(e) {
+          selectedLat = e.latlng.lat;
+          selectedLng = e.latlng.lng;
+          if (marker) marker.remove();
+          marker = L.marker([selectedLat, selectedLng]).addTo(map);
+          // Reverse geocode
+          fetch(`https://nominatim.openstreetmap.org/reverse?lat=${selectedLat}&lon=${selectedLng}&format=json`)
+            .then(r=>r.json()).then(d=>{
+              const addr = d.display_name || `${selectedLat.toFixed(5)}, ${selectedLng.toFixed(5)}`;
+              document.getElementById('addressPreview').textContent = addr;
+            }).catch(()=>{
+              document.getElementById('addressPreview').textContent = `${selectedLat.toFixed(5)}, ${selectedLng.toFixed(5)}`;
+            });
+        });
+      } else { map.invalidateSize(); }
+    }, 100);
+  }
+  function closeMap() { document.getElementById('mapModal').classList.remove('open'); }
+  function confirmLocation() {
+    if (!selectedLat) { alert('Please click on the map first.'); return; }
+    const addr = document.getElementById('addressPreview').textContent;
+    document.getElementById('deliveryAddress').value = addr;
+    document.getElementById('deliveryLat').value = selectedLat;
+    document.getElementById('deliveryLng').value = selectedLng;
+    closeMap();
+  }
+</script>
+</body>
+</html>
