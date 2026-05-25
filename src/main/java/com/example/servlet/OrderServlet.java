@@ -31,7 +31,7 @@ public class OrderServlet extends HttpServlet {
         List<Order> visible = OrderStore.findVisibleTo(user, admin, worker);
         Collections.reverse(visible);
         List<Order> active = new ArrayList<>();
-        List<Order> history = new ArrayList<>();
+
         for (Order order : visible) {
             if (order.isHistory()) history.add(order); else active.add(order);
         }
