@@ -91,7 +91,7 @@ public class OrderServlet extends HttpServlet {
     }
 
     private void printOption(PrintWriter out, String value, String current) {
-        out.println("<option value='" + HtmlUtil.esc(value) + "'" + (value.equals(current) ? " selected" : "") + ">" + HtmlUtil.esc(value) + "</option>");
+        out.println("<option value='" + HtmlUtil.esc(value) + "'" + (value.equals(current) ? " selected" : "") + ">" +      HtmlUtil.esc(value) + "</option>");
     }
 
     private String statusClass(String status) {
